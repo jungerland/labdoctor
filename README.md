@@ -47,13 +47,36 @@ Codelab Markdown / Jupyter Notebook
 
 ## 🚀 Quickstart
 
-### 1. Run the Verification Pipeline
+### 1. Installation & Setup
 ```bash
-python3 labdoctor/main.py
+# Clone the repository
+git clone https://github.com/jungerland/labdoctor.git
+cd labdoctor
+
+# Install dependencies
+pip install -e .
 ```
 
-### 2. Output Highlights
-1. **Parses the sample broken lab** (`sample_labs/broken_cloud_run_lab.md`).
+### 2. Run the Verification Pipeline
+```bash
+# Run verification on complex sample lab
+python3 main.py
+
+# Or run verification on Cloud Run sample lab
+python3 main.py cloud_run
+```
+
+### 3. Manage Issue Queue & Self-Healing Playbook
+```bash
+# Inspect unresolved escalation queue
+python3 -m src.queue.cli
+
+# View or manage self-healing playbook rules
+python3 -m src.playbook.cli
+```
+
+### 4. Output Highlights
+1. **Parses the sample broken lab** (`sample_labs/broken_cloud_run_lab.md` or `sample_labs/complex_broken_lab.md`).
 2. **Executes steps via MCP sandbox harness**.
 3. **Catches real-world deprecations**:
    - `gcloud secrets create --replication-policy=automatic` (deprecated flag).
@@ -65,9 +88,11 @@ python3 labdoctor/main.py
 ---
 
 ## 📂 Project Structure
-- [`main.py`](file:///Users/jayungerland/gs-os/labdoctor/main.py): Pipeline execution and CLI demo.
-- [`src/parser/lab_parser.py`](file:///Users/jayungerland/gs-os/labdoctor/src/parser/lab_parser.py): Markdown AST step and command extractor.
-- [`src/mcp_tools/gcp_sandbox_server.py`](file:///Users/jayungerland/gs-os/labdoctor/src/mcp_tools/gcp_sandbox_server.py): MCP tool interfaces for shell execution and GCP doc lookup.
-- [`src/agent/orchestrator.py`](file:///Users/jayungerland/gs-os/labdoctor/src/agent/orchestrator.py): Verification and self-healing loop.
-- [`src/reporter/pr_generator.py`](file:///Users/jayungerland/gs-os/labdoctor/src/reporter/pr_generator.py): Human-in-the-loop PR description & markdown patch generator.
-- [`src/reporter/metrics.py`](file:///Users/jayungerland/gs-os/labdoctor/src/reporter/metrics.py): BigQuery operational telemetry exporter.
+- [`main.py`](main.py): Pipeline execution and CLI demo.
+- [`src/parser/lab_parser.py`](src/parser/lab_parser.py): Markdown AST step and command extractor.
+- [`src/mcp_tools/gcp_sandbox_server.py`](src/mcp_tools/gcp_sandbox_server.py): MCP tool interfaces for shell execution and GCP doc lookup.
+- [`src/agent/orchestrator.py`](src/agent/orchestrator.py): Verification and self-healing loop.
+- [`src/playbook/engine.py`](src/playbook/engine.py): Rule evaluation and self-healing playbook engine.
+- [`src/queue/issue_queue.py`](src/queue/issue_queue.py): Human-in-the-loop issue queue store.
+- [`src/reporter/pr_generator.py`](src/reporter/pr_generator.py): Human-in-the-loop PR description & markdown patch generator.
+- [`src/reporter/metrics.py`](src/reporter/metrics.py): BigQuery operational telemetry exporter.
