@@ -1,0 +1,14 @@
+[project]
+name = "labdoctor"
+version = "0.1.0"
+description = "Automated AI Agent for Google Cloud Hands-On Lab Verification, Diagnosis, and Self-Healing"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.0.0",
+    "google-genai>=0.1.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

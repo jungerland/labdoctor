@@ -1,0 +1,66 @@
+[
+  {
+    "issue_id": "ISSUE-8EA27FEF",
+    "lab_path": "Deploying Serverless Event Pipelines with Eventarc and Cloud Functions",
+    "lab_title": "Deploying Serverless Event Pipelines with Eventarc and Cloud Functions",
+    "step_id": 2,
+    "step_title": "Download Sample Data Asset",
+    "failed_command": "# External bucket that was removed/decommissioned by the original author\ngsutil cp gs://expired-legacy-training-bucket-2022/sample_transactions.csv ./sample.csv",
+    "error_stdout": "",
+    "error_stderr": "BucketNotFoundException: 404 The specified bucket 'expired-legacy-training-bucket-2022' does not exist.",
+    "failure_category": "MISSING_EXTERNAL_ASSET",
+    "diagnosis": "The upstream Cloud Storage bucket referenced in this lab no longer exists or permissions were revoked. An agent cannot autonomously synthesize or host external customer data assets.",
+    "candidate_solutions": [
+      {
+        "title": "Rehost dataset in official Google Cloud public bucket",
+        "description": "Move sample_transactions.csv to gs://cloud-training-samples/ and update lab reference.",
+        "proposed_command": null,
+        "pros_and_cons": null
+      },
+      {
+        "title": "Generate local synthetic dataset via Python script",
+        "description": "Inject an inline bash/python command in Step 2 that generates 100 rows of mock CSV data on the fly.",
+        "proposed_command": "python3 -c \"import pandas as pd; ...\"",
+        "pros_and_cons": null
+      }
+    ],
+    "status": "RESOLVED",
+    "created_at": "2026-10-11T19:15:35.280820+00:00",
+    "resolved_by": "Google Learning Specialist",
+    "resolution_notes": "Converted into autonomous Playbook Rule RULE-BB2211.",
+    "applied_command": null,
+    "learned_rule_id": null
+  },
+  {
+    "issue_id": "ISSUE-98415AD8",
+    "lab_path": "Deploying Serverless Event Pipelines with Eventarc and Cloud Functions",
+    "lab_title": "Deploying Serverless Event Pipelines with Eventarc and Cloud Functions",
+    "step_id": 3,
+    "step_title": "Deploy Cloud Function for Storage Events",
+    "failed_command": "# Note: Cloud Functions v1 background trigger syntax is deprecated/retired in this region\ngcloud functions deploy process-transactions \\\n    --runtime=python39 \\\n    --trigger-resource=sample-incoming-bucket \\\n    --trigger-event=google.storage.object.finalize \\\n    --entry-point=process_file",
+    "error_stdout": "",
+    "error_stderr": "ERROR: (gcloud.functions.deploy) Cloud Functions 1st gen background triggers are deprecated in this region. You must migrate to Cloud Functions 2nd gen (--gen2) with Eventarc triggers, OR deploy a container service to Cloud Run directly.",
+    "failure_category": "ARCHITECTURAL_CHOICE_NEEDED",
+    "diagnosis": "Legacy Cloud Functions 1st gen background triggers are retired. Upgrading requires a pedagogical/architectural decision between Cloud Functions 2nd Gen (Eventarc) or migrating the lab entirely to Google Cloud Run.",
+    "candidate_solutions": [
+      {
+        "title": "Migrate to Cloud Functions 2nd Gen (Eventarc)",
+        "description": "Upgrade command to '--gen2' with '--trigger-event-filters=type=google.cloud.storage.object.v1.finalized'.",
+        "proposed_command": null,
+        "pros_and_cons": "Maintains serverless function paradigm; aligns with Cloud Functions 2.0 exam track."
+      },
+      {
+        "title": "Refactor lab into Cloud Run Service with Eventarc trigger",
+        "description": "Wrap code in container and deploy directly to Cloud Run.",
+        "proposed_command": null,
+        "pros_and_cons": "Provides containerization practice, but increases lab complexity."
+      }
+    ],
+    "status": "CO_HEAL_READY",
+    "created_at": "2026-10-11T19:15:35.281556+00:00",
+    "resolved_by": null,
+    "resolution_notes": null,
+    "applied_command": null,
+    "learned_rule_id": null
+  }
+]
