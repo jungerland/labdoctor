@@ -12,7 +12,7 @@ gcloud config set run/region us-central1
 ## Step 2: Store Service Secret
 Create a secret to store database credentials:
 ```bash
-gcloud secrets create api-token-secret --replication-policy=automatic --data-file=/dev/null
+gcloud secrets create api-token-secret --replication-policy=user-managed --data-file=/dev/null
 ```
 
 ## Step 3: Grant Secret Access

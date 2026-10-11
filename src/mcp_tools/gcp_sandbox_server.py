@@ -46,16 +46,15 @@ class GCPSandboxTools:
 
         # Handle Secret Manager creation
         if "gcloud secrets create" in clean_cmd:
-            if "--replication-policy=" in clean_cmd:
-                # Catching deprecated flag in Secret Manager
+            if "--replication-policy=user-managed" in clean_cmd and "--locations" not in clean_cmd:
+                # Catch missing required argument when user-managed replication is chosen
                 return CommandResult(
                     command=command,
-                    exit_code=1,
+                    exit_code=2,
                     stdout="",
                     stderr=(
-                        "ERROR: (gcloud.secrets.create) unrecognized arguments: "
-                        "--replication-policy=automatic. "
-                        "The replication policy argument has been deprecated; use --replication-policy=user-managed or omit for default automatic replication."
+                        "ERROR: (gcloud.secrets.create) argument --replication-policy: "
+                        "If user-managed then --locations must also be provided."
                     ),
                 )
             self.secrets["api-token-secret"] = "active"
@@ -147,9 +146,9 @@ class GCPSandboxTools:
         """
         knowledge_base = {
             "gcloud secrets create": (
-                "In newer gcloud releases, '--replication-policy=automatic' is the default and should be omitted, "
-                "or specify '--replication-policy=automatic' as '--replication-policy=automatic' only on legacy CLI. "
-                "Recommended modern syntax: 'gcloud secrets create [NAME] --data-file=[PATH]'"
+                "When '--replication-policy=user-managed' is specified, you must supply '--locations=[LOCATION,...]'. "
+                "Alternatively, omit replication flags to use default automatic replication: "
+                "'gcloud secrets create [NAME] --data-file=[PATH]'"
             ),
             "gcloud run deploy": (
                 "The '--platform' flag has been deprecated and removed. All Cloud Run services are deployed to "

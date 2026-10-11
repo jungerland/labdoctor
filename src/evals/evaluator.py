@@ -53,7 +53,7 @@ class LabDoctorEvaluator:
             LabBenchmarkExpectation(
                 benchmark_id="BENCH-01-CLI-FLAGS",
                 lab_file=os.path.join(self.benchmarks_dir, "01_deprecated_flags_lab.md"),
-                description="Verifies auto-healing of obsolete CLI arguments (--replication-policy and --platform=managed).",
+                description="Verifies auto-healing of broken/obsolete CLI arguments (--replication-policy=user-managed without locations and --platform=managed).",
                 expected_initial_failures=2,
                 expected_healed_steps=2,
                 expected_escalated_issues=0,

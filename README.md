@@ -89,8 +89,8 @@ pytest tests/ -v
 ### 5. Output Highlights
 1. **Parses the sample broken lab** (`sample_labs/broken_cloud_run_lab.md` or `sample_labs/complex_broken_lab.md`).
 2. **Executes steps via MCP sandbox harness**.
-3. **Catches real-world deprecations**:
-   - `gcloud secrets create --replication-policy=automatic` (deprecated flag).
+3. **Catches real-world CLI issues and deprecations**:
+   - `gcloud secrets create --replication-policy=user-managed` (missing required `--locations` argument).
    - `gcloud run deploy --platform=managed` (obsolete flag).
 4. **Auto-heals the commands** and re-runs them in the sandbox.
 5. **Generates a ready-to-merge PR description** and writes `healed_cloud_run_lab.md`.

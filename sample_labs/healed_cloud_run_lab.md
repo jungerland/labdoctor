@@ -19,7 +19,7 @@ Updated property [run/region].
 Create a new secret to store API access tokens:
 
 ```bash
-# Note: Deprecated flag used in older GCP docs
+# Note: Syntax error - user-managed replication requires --locations flag
 gcloud secrets create api-token-secret --data-file=token.txt
 ```
 

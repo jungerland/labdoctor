@@ -19,8 +19,8 @@ Updated property [run/region].
 Create a new secret to store API access tokens:
 
 ```bash
-# Note: Deprecated flag --replication-policy=automatic used in older GCP docs
-gcloud secrets create api-token-secret --replication-policy=automatic --data-file=token.txt
+# Note: Syntax error - user-managed replication requires --locations flag
+gcloud secrets create api-token-secret --replication-policy=user-managed --data-file=token.txt
 ```
 
 Expected output:

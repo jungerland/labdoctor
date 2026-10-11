@@ -1,20 +1,20 @@
 [
   {
     "rule_id": "RULE-RULE-SECRET-REP",
-    "name": "Secret Manager Replication Policy Deprecation",
-    "description": "Strip obsolete --replication-policy=automatic from gcloud secrets create",
+    "name": "Secret Manager User-Managed Replication Missing Locations",
+    "description": "Strip invalid --replication-policy=user-managed without locations to fall back to default automatic replication",
     "category": "CLI_DEPRECATION",
-    "error_pattern": "unrecognized arguments: --replication-policy=automatic",
+    "error_pattern": "If user-managed then --locations must also be provided",
     "command_pattern": "gcloud secrets create",
     "match_condition": "CONTAINS_ERROR",
     "strategy": "REMOVE_FLAG",
-    "find_target": "--replication-policy=automatic ",
+    "find_target": "--replication-policy=user-managed ",
     "replace_with": "",
     "replacement_template": null,
     "learned_from_issue_id": null,
     "author": "system-default",
     "created_at": "2026-10-11T19:20:30.074550+00:00",
-    "times_applied": 5,
+    "times_applied": 11,
     "success_rate": 1.0
   },
   {
@@ -32,7 +32,7 @@
     "learned_from_issue_id": null,
     "author": "system-default",
     "created_at": "2026-10-11T19:20:30.074554+00:00",
-    "times_applied": 5,
+    "times_applied": 11,
     "success_rate": 1.0
   },
   {
@@ -50,7 +50,7 @@
     "learned_from_issue_id": "ISSUE-8EA27FEF",
     "author": "Google Learning Specialist",
     "created_at": "2026-10-11T19:20:40.358566+00:00",
-    "times_applied": 0,
+    "times_applied": 1,
     "success_rate": 1.0
   }
 ]
