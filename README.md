@@ -75,7 +75,16 @@ python3 -m src.queue.cli
 python3 -m src.playbook.cli
 ```
 
-### 4. Output Highlights
+### 4. Run Quantitative Agent Evaluation Suite (Rubric & Metrics)
+```bash
+# Execute the agentic verification benchmark suite & scorecard
+python3 -m src.evals.cli
+
+# Run automated tests
+pytest tests/ -v
+```
+
+### 5. Output Highlights
 1. **Parses the sample broken lab** (`sample_labs/broken_cloud_run_lab.md` or `sample_labs/complex_broken_lab.md`).
 2. **Executes steps via MCP sandbox harness**.
 3. **Catches real-world deprecations**:
@@ -84,11 +93,14 @@ python3 -m src.playbook.cli
 4. **Auto-heals the commands** and re-runs them in the sandbox.
 5. **Generates a ready-to-merge PR description** and writes `healed_cloud_run_lab.md`.
 6. **Emits BigQuery telemetry** tracking reliability and ~3.2 engineering hours saved.
+7. **Evaluates against ground truth benchmarks**: Measures Fix Pass Rate (FPR), Negative Control Integrity (0% false positives), and Escalation Precision.
 
 ---
 
 ## 📂 Project Structure
 - [`main.py`](main.py): Pipeline execution and CLI demo.
+- [`src/evals/`](src/evals/): Quantitative evaluation runner (`evaluator.py`, `cli.py`, `schema.py`).
+- [`evals/benchmarks/`](evals/benchmarks/): Golden benchmark lab suite (CLI flags, negative controls, missing assets, arch forks).
 - [`src/parser/lab_parser.py`](src/parser/lab_parser.py): Markdown AST step and command extractor.
 - [`src/mcp_tools/gcp_sandbox_server.py`](src/mcp_tools/gcp_sandbox_server.py): MCP tool interfaces for shell execution and GCP doc lookup.
 - [`src/agent/orchestrator.py`](src/agent/orchestrator.py): Verification and self-healing loop.
@@ -96,3 +108,5 @@ python3 -m src.playbook.cli
 - [`src/queue/issue_queue.py`](src/queue/issue_queue.py): Human-in-the-loop issue queue store.
 - [`src/reporter/pr_generator.py`](src/reporter/pr_generator.py): Human-in-the-loop PR description & markdown patch generator.
 - [`src/reporter/metrics.py`](src/reporter/metrics.py): BigQuery operational telemetry exporter.
+- [`tests/`](tests/): Pytest unit and integration test suite.
+

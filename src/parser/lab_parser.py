@@ -75,3 +75,10 @@ def parse_markdown_lab(content: str) -> ParsedLab:
         )
 
     return ParsedLab(title=lab_title, overview=overview, steps=steps)
+
+
+def parse_lab_file(file_path: str) -> ParsedLab:
+    """Reads a file from disk and parses it into structured lab steps."""
+    with open(file_path, "r", encoding="utf-8") as f:
+        return parse_markdown_lab(f.read())
+
