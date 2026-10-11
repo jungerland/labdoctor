@@ -7,3 +7,6 @@ venv/
 *.egg-info/
 .pytest_cache/
 .DS_Store
+
+# Private notes, kept in gs-os (symlinked)
+PROJECT_MEMORY.md

@@ -6,12 +6,14 @@
 
 **LabDoctor** is an agentic AI solution engineered for **Google Cloud Learning Services**. It autonomously audits, tests, diagnoses, and self-heals broken hands-on labs and codelabs caused by API deprecations, SDK flag changes, and IAM drift.
 
+**Status: prototype.** The MCP sandbox runs in simulated mode; live GCP project execution is next.
+
 ---
 
 ## 🎯 Target Role & Value Proposition
 Designed specifically for the **Senior AI Solution Builder (Cloud Learning Services)** role at Google:
 * **Workflow Automation**: Replaces manual lab regression testing across thousands of Cloud Skills Boost & Codelab modules.
-* **Tool Augmentation via MCP**: Uses Model Context Protocol tool calling to interact with sandboxed GCP environments (`gcloud`, `terraform`, audit logs).
+* **Tool Augmentation via MCP**: Uses Model Context Protocol tool calling to interact with sandboxed GCP environments (`gcloud`, bash, audit logs; Terraform planned).
 * **Self-Healing & HITL Governance**: Diagnoses root causes, checks updated GCP documentation, verifies fixes in an isolated sandbox, and submits clean GitHub PRs for human curriculum designers.
 * **Operational Telemetry & ROI**: Emits BigQuery-ready telemetry modeling engineering hours saved and API drift trends.
 
@@ -29,7 +31,7 @@ Codelab Markdown / Jupyter Notebook
    [2. LabDoctor Agent Orchestrator]
          │                     ▲
          ▼                     │
-    MCP Sandbox Tool ──► Command Execution (gcloud, terraform, bash)
+    MCP Sandbox Tool ──► Command Execution (gcloud, bash; terraform planned)
          │                     │
          ▼ (Exit Code != 0)    │
    [3. Diagnostic & Auto-Healer]
@@ -92,7 +94,7 @@ pytest tests/ -v
    - `gcloud run deploy --platform=managed` (obsolete flag).
 4. **Auto-heals the commands** and re-runs them in the sandbox.
 5. **Generates a ready-to-merge PR description** and writes `healed_cloud_run_lab.md`.
-6. **Emits BigQuery telemetry** tracking reliability and ~3.2 engineering hours saved.
+6. **Emits BigQuery telemetry** tracking reliability and an estimated ~3.2 engineering hours saved (assumed weights: 0.1 hr per passing step, 1.5 per healed step, 0.5 per queued step; see `src/agent/orchestrator.py`).
 7. **Evaluates against ground truth benchmarks**: Measures Fix Pass Rate (FPR), Negative Control Integrity (0% false positives), and Escalation Precision.
 
 ---
